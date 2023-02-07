@@ -21,11 +21,11 @@
         "tags": [
           "Attendance"
         ],
-        "description": "returns today's attendance records",
+        "description": "Returns today's attendance records.",
         "operationId": "getAttendanceToday",
         "responses": {
           "200": {
-            "description": "Attendance for Today",
+            "description": "Get attendance for today.",
             "content": {
               "application/json": {
                 "schema": {
@@ -42,13 +42,13 @@
         "tags": [
           "Attendance"
         ],
-        "description": "returns attendance records on specific date",
+        "description": "Returns attendance records on specific date.",
         "operationId": "getAttendanceOnDate",
         "parameters": [
           {
             "name": "date",
             "in": "query",
-            "description": "Type in a specific date e.g. 2022-01-03",
+            "description": "Type in a specific date e.g. 2022-01-03.",
             "required": true,
             "style": "form",
             "explode": true,
@@ -59,7 +59,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Attendance on specific date",
+            "description": "Get attendance on a specific date.",
             "content": {
               "application/json": {
                 "schema": {
@@ -86,13 +86,13 @@
         "tags": [
           "Employee"
         ],
-        "description": "returns employees without clockout on specific date intervals",
+        "description": "Returns employees without clockout on specific date intervals.",
         "operationId": "getNoClockOutEmployees",
         "parameters": [
           {
             "name": "dateFrom",
             "in": "query",
-            "description": "Type in a specific date e.g. 2022-01-03",
+            "description": "Type in a starting date e.g. 2022-01-03.",
             "required": true,
             "style": "form",
             "explode": true,
@@ -103,7 +103,7 @@
           {
             "name": "dateTo",
             "in": "query",
-            "description": "Type in a specific date e.g. 2022-01-20",
+            "description": "Type in a ending date e.g. 2022-01-20.",
             "required": true,
             "style": "form",
             "explode": true,
@@ -114,7 +114,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Employee list without clocking out",
+            "description": "Get employees without clocking out on specific date intervals.",
             "content": {
               "application/json": {
                 "schema": {
@@ -124,7 +124,7 @@
             }
           },
           "400": {
-            "description": "Type in invalid date intervals",
+            "description": "Type in invalid date intervals.",
             "content": {
               "application/json": {
                 "schema": {
@@ -141,13 +141,13 @@
         "tags": [
           "Employee"
         ],
-        "description": "returns first-five clock in employee on specific date",
+        "description": "Returns first-five clock in employees on a specific date.",
         "operationId": "getFirstFiveEmployee",
         "parameters": [
           {
             "name": "date",
             "in": "query",
-            "description": "Type in a specific date e.g. 2022-01-03",
+            "description": "Type in a specific date e.g. 2022-01-03.",
             "required": true,
             "style": "form",
             "explode": true,
@@ -158,7 +158,7 @@
         ],
         "responses": {
           "200": {
-            "description": "first-five clock in employees on specific date",
+            "description": "Get first-five clock in employees on a specific date.",
             "content": {
               "application/json": {
                 "schema": {
@@ -168,7 +168,7 @@
             }
           },
           "400": {
-            "description": "Without typing date",
+            "description": "Without typing a date.",
             "content": {
               "application/json": {
                 "schema": {
@@ -185,9 +185,10 @@
         "tags": [
           "Clock"
         ],
-        "description": "clock in and clock out",
+        "description": "Clock in and Clock out at the present time.",
         "operationId": "postClockInAndOut",
         "requestBody": {
+          "description": "please type in employee number (7 number fixed) e.g. 1110001",
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
@@ -198,7 +199,7 @@
         },
         "responses": {
           "200": {
-            "description": "clock in or clock out successfully",
+            "description": "Clock in or Clock out successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -208,7 +209,7 @@
             }
           },
           "400": {
-            "description": "clock repeatedly",
+            "description": "Clock repeatedly.",
             "content": {
               "application/json": {
                 "schema": {
@@ -225,9 +226,10 @@
         "tags": [
           "Clock"
         ],
-        "description": "clock makeup",
+        "description": "Clock makeup at the present time",
         "operationId": "postClockMakeup",
         "requestBody": {
+          "description": "Please type in employee number (7 number fixed) e.g. 1110001.",
           "content": {
             "application/x-www-form-urlencoded": {
               "schema": {
@@ -238,7 +240,7 @@
         },
         "responses": {
           "200": {
-            "description": "clock makeup successfully",
+            "description": "Clock makeup successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -248,7 +250,7 @@
             }
           },
           "400": {
-            "description": "Without typing date",
+            "description": "Without typing a date.",
             "content": {
               "application/json": {
                 "schema": {
