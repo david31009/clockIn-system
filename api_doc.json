@@ -1,0 +1,458 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ClockIn System API",
+    "description": "The APIs for the clockIn-system project",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/david31009/clockIn-system/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "https://appworks.online/api/1.0",
+      "description": "Server on AWS EC2"
+    }
+  ],
+  "paths": {
+    "/attendance/today": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "description": "returns today's attendance records",
+        "operationId": "getAttendanceToday",
+        "responses": {
+          "200": {
+            "description": "Attendance for Today",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/attendanceToday"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/attendance": {
+      "get": {
+        "tags": [
+          "Attendance"
+        ],
+        "description": "returns attendance records on specific date",
+        "operationId": "getAttendanceOnDate",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Type in a specific date e.g. 2022-01-03",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendance on specific date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/attendanceDate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Without typing date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/attendanceDateError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/noClockOut": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "description": "returns employees without clockout on specific date intervals",
+        "operationId": "getNoClockOutEmployees",
+        "parameters": [
+          {
+            "name": "dateFrom",
+            "in": "query",
+            "description": "Type in a specific date e.g. 2022-01-03",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dateTo",
+            "in": "query",
+            "description": "Type in a specific date e.g. 2022-01-20",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employee list without clocking out",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/employeeNoClockOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Type in invalid date intervals",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/employeeNoClockOutError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/firstFive": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "description": "returns first-five clock in employee on specific date",
+        "operationId": "getFirstFiveEmployee",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Type in a specific date e.g. 2022-01-03",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "first-five clock in employees on specific date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/employeeFirstFive"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Without typing date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/employeeFirstFiveError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clock": {
+      "post": {
+        "tags": [
+          "Clock"
+        ],
+        "description": "clock in and clock out",
+        "operationId": "postClockInAndOut",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/clockRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "clock in or clock out successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/clockResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "clock repeatedly",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/clockResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clock/makeup": {
+      "post": {
+        "tags": [
+          "Clock"
+        ],
+        "description": "clock makeup",
+        "operationId": "postClockMakeup",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/clockMakeupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "clock makeup successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/clockMakeupResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Without typing date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/clockMakeupResponseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "attendanceToday": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/attendanceToday_data"
+            }
+          }
+        }
+      },
+      "attendanceDate": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/attendanceToday_data"
+            }
+          }
+        }
+      },
+      "attendanceDateError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "No Input Date."
+          }
+        }
+      },
+      "employeeNoClockOut": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/employeeNoClockOut_data"
+            }
+          }
+        }
+      },
+      "employeeNoClockOutError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Wrong Input Format."
+          }
+        }
+      },
+      "employeeFirstFive": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/employeeFirstFive_data"
+            }
+          }
+        }
+      },
+      "employeeFirstFiveError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "No Input Date."
+          }
+        }
+      },
+      "clockRequest": {
+        "required": [
+          "employeeNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "employeeNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "clockResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "ClockIn Successfully."
+          }
+        }
+      },
+      "clockResponseError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Already Clocked."
+          }
+        }
+      },
+      "clockMakeupRequest": {
+        "required": [
+          "employeeNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "employeeNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "clockMakeupResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Clock Makeup Successfully."
+          }
+        }
+      },
+      "clockMakeupResponseError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Already Clocked Makeup."
+          }
+        }
+      },
+      "attendanceToday_data": {
+        "type": "object",
+        "properties": {
+          "employeeNumber": {
+            "type": "string",
+            "example": "1110016"
+          },
+          "clockIn": {
+            "type": "string",
+            "nullable": true,
+            "example": "08:19:00"
+          },
+          "clockOut": {
+            "type": "string",
+            "nullable": true,
+            "example": "17:28:00"
+          },
+          "breakTime": {
+            "type": "integer",
+            "nullable": true
+          },
+          "workTime": {
+            "type": "integer",
+            "nullable": true
+          }
+        }
+      },
+      "employeeNoClockOut_data": {
+        "type": "object",
+        "properties": {
+          "employeeNumber": {
+            "type": "string",
+            "example": "1110010"
+          },
+          "date": {
+            "type": "string",
+            "example": "2022-01-03"
+          },
+          "clockOut": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "employeeFirstFive_data": {
+        "type": "object",
+        "properties": {
+          "employeeNumber": {
+            "type": "string",
+            "example": "1110003"
+          },
+          "date": {
+            "type": "string",
+            "example": "2022-01-03"
+          },
+          "clockIn": {
+            "type": "string",
+            "example": "08:00:00"
+          }
+        }
+      }
+    }
+  }
+}
