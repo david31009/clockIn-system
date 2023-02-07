@@ -41,7 +41,7 @@
   3. 當日員工出席資訊: (GET): https://appworks.online/api/1.0/attendance/today
 
      - 其資訊須包含員工工號、上班時間、下班時間、休息時間、總工時。休息時間計算方時為: 若上班與下班時間包含完整休息時間，則以 1.5 紀錄，否則回傳 null。
-     - 總工時為 `下班時間 - 上班時間`，以小時計算，四捨五入至小數點第一位。
+     - 總工時為 `下班時間 - 上班時間`，以小時計算，四捨五入至小數點第一位，若上班或下班有未打卡紀錄，則不計算總工時，回傳 null。
 
   4. 指定日期員工出席資訊: (GET): https://appworks.online/api/1.0/attendance?date=2022-01-03 其 API 為 query string 設計，需輸入指定日期 (date) `YYYY-MM-DD` 或 `YYYYMMDD` 格式。
 
