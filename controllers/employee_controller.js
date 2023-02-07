@@ -10,7 +10,7 @@ const firstFiveWorkers = async (req, res) => {
       clockIn: employee['clockin_time']
     };
   });
-  res.status(200).json({ [date]: employees });
+  res.status(200).json({ data: employees });
 };
 
 const noClockOutWorkers = async (req, res) => {
@@ -31,7 +31,7 @@ const noClockOutWorkers = async (req, res) => {
     };
   });
 
-  res.status(200).json({ [date]: employees });
+  res.status(200).json({ data: employees });
 };
 
 module.exports = { firstFiveWorkers, noClockOutWorkers };
