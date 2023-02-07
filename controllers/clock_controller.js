@@ -9,7 +9,11 @@ const clock = async (req, res) => {
   const date = moment().format('YYYY-MM-DD');
   const time = moment().format('hh:mm:ss');
   const message = await Clock.clock(employeeNumber, date, time);
-  res.status(200).json(message);
+  if (message.error) {
+    res.status(400).json(message);
+  } else {
+    res.status(200).json(message);
+  }
 };
 
 const clockMakeup = async (req, res) => {
@@ -20,7 +24,11 @@ const clockMakeup = async (req, res) => {
   const date = moment().format('YYYY-MM-DD');
   const time = moment().format('hh:mm:ss');
   const message = await Clock.clockMakeup(employeeNumber, date, time);
-  res.status(200).json(message);
+  if (message.error) {
+    res.status(400).json(message);
+  } else {
+    res.status(200).json(message);
+  }
 };
 
 module.exports = { clock, clockMakeup };
