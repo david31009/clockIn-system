@@ -2,6 +2,8 @@ const Employee = require('../models/employee_model');
 
 const firstFiveWorkers = async (req, res) => {
   const { date } = req.query;
+  if (!date) return res.status(400).json({ error: 'No Input Date.' });
+
   let employees = await Employee.firstFiveWorkers(date);
   employees = employees.map((employee) => {
     return {
@@ -14,15 +16,10 @@ const firstFiveWorkers = async (req, res) => {
 };
 
 const noClockOutWorkers = async (req, res) => {
-  const { date } = req.query;
-  const dateStart = date.split('~')[0];
-  const dateEnd = date.split('~')[1];
+  const { dateFrom, dateTo } = req.query;
+  if (!dateFrom || !dateTo) return res.status(400).json({ error: 'No Input Date Intervals.' });
 
-  if (!dateStart || !dateEnd) {
-    return res.json({ error: 'Wrong Input Format.' });
-  }
-
-  let employees = await Employee.noClockOutWorkers(dateStart, dateEnd);
+  let employees = await Employee.noClockOutWorkers(dateFrom, dateTo);
   employees = employees.map((employee) => {
     return {
       employeeNumber: employee['employee_number'],

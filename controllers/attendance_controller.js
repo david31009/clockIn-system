@@ -4,6 +4,8 @@ const { organize } = require('../service/attendance_service');
 
 const attendanceDate = async (req, res) => {
   const { date } = req.query;
+  if (!date) return res.status(400).json({ error: 'No Input Date.' });
+
   let workersInfo = await Attendance.attendanceDate(date);
   workersInfo = organize(workersInfo);
   res.status(200).json({ data: workersInfo });

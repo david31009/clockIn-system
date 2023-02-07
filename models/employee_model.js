@@ -7,10 +7,10 @@ const firstFiveWorkers = async (date) => {
   return employees;
 };
 
-const noClockOutWorkers = async (dateStart, dateEnd) => {
+const noClockOutWorkers = async (dateFrom, dateTo) => {
   const sql =
     'SELECT `employee_number`, `date`, `clockout_time` FROM `attendance_records` WHERE `date` BETWEEN ? AND ? AND `clockout_time` IS NULL ORDER BY `date`';
-  const [employees] = await pool.execute(sql, [dateStart, dateEnd]);
+  const [employees] = await pool.execute(sql, [dateFrom, dateTo]);
   return employees;
 };
 
